@@ -36,6 +36,37 @@ a:hover { text-decoration: underline; }
 }
 .nav-link.active, .nav-link:hover { background: #172146; text-decoration: none; }
 .main { padding: 40px 48px 64px; max-width: 1100px; min-width: 0; width: 100%; }
+.mobile-bar,
+.mobile-overlay { display: none; }
+.mobile-bar {
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.mobile-menu-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(18, 25, 50, 0.94);
+  color: var(--text);
+  padding: 10px 14px;
+  font: inherit;
+}
+.mobile-menu-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+.mobile-bar-title {
+  min-width: 0;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .hero { margin-bottom: 28px; }
 .hero h1 { font-size: 36px; line-height: 1.15; margin: 0 0 12px; }
 .hero p { color: var(--muted); max-width: 800px; }
@@ -71,8 +102,46 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
 .footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
 @media (max-width: 980px) {
   .layout { grid-template-columns: 1fr; }
-  .sidebar { position: relative; height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
-  .main { padding: 28px 18px 50px; }
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 30;
+    width: min(86vw, 320px);
+    height: 100vh;
+    border-right: 1px solid var(--line);
+    border-bottom: 0;
+    transform: translateX(-100%);
+    transition: transform .22s ease;
+    box-shadow: 0 24px 60px rgba(0,0,0,.35);
+  }
+  .sidebar-open .sidebar { transform: translateX(0); }
+  .mobile-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    border: 0;
+    padding: 0;
+    background: rgba(3, 7, 18, .58);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .22s ease;
+  }
+  .sidebar-open .mobile-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .main { padding: 20px 18px 50px; }
+  .mobile-bar {
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: 10px 0 14px;
+    background: linear-gradient(180deg, rgba(11, 16, 32, .96), rgba(11, 16, 32, .84) 70%, rgba(11, 16, 32, 0));
+    backdrop-filter: blur(8px);
+  }
   .grid.cols-2, .grid.cols-3 { grid-template-columns: 1fr; }
   .hero h1 { font-size: 28px; }
   .kv, .kv tbody, .kv tr, .kv th, .kv td {
