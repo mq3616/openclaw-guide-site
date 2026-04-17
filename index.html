@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="面向当前 OpenClaw 多 Bot 配置的实战精讲站，帮助你快速理解 openclaw.json、Bot 路由、工作区与技能分工。" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>OpenClaw 精讲站</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">🦊 OpenClaw 精讲</div>
+    <div class="subtitle">围绕你当前这套多 Bot 配置做的实战说明站</div>
+    <div class="nav-group">
+      <div class="nav-title">总览</div>
+      <a class="nav-link" href="index.html">🏠 首页</a>
+      <a class="nav-link" href="config-map.html">🗺️ 配置地图</a>
+      <a class="nav-link" href="openclaw-json.html">🧩 openclaw.json 详解</a>
+      <a class="nav-link" href="bots-routing.html">🤖 Bot / Agent / Binding</a>
+      <a class="nav-link" href="openclaw-json-bots-deep-dive.html">🧬 Bots 相关 key 深挖</a>
+      <a class="nav-link" href="openclaw-json-real-walkthrough.html">📖 真实 openclaw.json 解读</a>
+      <a class="nav-link" href="bot-workspaces.html">🧠 Bot 工作区文件</a>
+      <a class="nav-link" href="bot-workspaces-real-interpretation.html">🧾 真实 Bot 文件解读</a>
+      <a class="nav-link" href="discord-config.html">💬 Discord 配置重点</a>
+      <a class="nav-link" href="skills-customization.html">🛠️ Skills 与个性化</a>
+      <a class="nav-link" href="config-recipes.html">🧪 配置修改实例</a>
+      <a class="nav-link" href="bot-role-handbook.html">📒 Bot 岗位说明书</a>
+      <a class="nav-link" href="maintenance-playbook.html">🧯 多 Bot 维护手册</a>
+      <a class="nav-link" href="risk-matrix.html">⚠️ 改动风险矩阵</a>
+      <a class="nav-link" href="change-checklist.html">✅ 改前改后检查清单</a>
+      <a class="nav-link" href="troubleshooting.html">🩺 常见故障排查</a>
+      <a class="nav-link" href="quick-reference.html">📌 快速参考</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <section class="hero">
+      <span class="badge">静态站，可直接发布到公网</span>
+      <h1>OpenClaw 常用配置文件精讲</h1>
+      <p>这套站点不是照搬官方文档，而是围绕你当前机器上的实际结构，把 <code>~/.openclaw/openclaw.json</code>、多 Bot 路由、Bot 工作区文件、Skills 个性化这些最容易混淆的部分拆开讲清楚。</p>
+      <p>目标很直接：看完之后，你能判断该去哪里改、改哪一层、为什么这样改更稳。</p>
+    </section>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <h2>这套站最适合什么时候看</h2>
+        <ul>
+          <li>想搞清楚一个 Discord Bot 最终为什么会接到某个 agent。</li>
+          <li>想理解 <code>openclaw.json</code> 里常见 key 的真实作用。</li>
+          <li>想分辨 Bot 的“人格差异”和“能力差异”分别来自哪里。</li>
+          <li>想以后自己改 Bot 配置，而不是每次靠猜。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>你当前这套系统的核心事实</h2>
+        <ul>
+          <li>你现在是多账号、多 Bot 的接线方式，不同入口会路由到不同 agent。</li>
+          <li>真正的行为差异，很多时候来自各自的 workspace 文件，而不只是模型名。</li>
+          <li>如果不同 agent 没有单独收紧 <code>skills</code>，那它们的能力边界会比较接近。</li>
+          <li>要做稳定分工，就得把路由层、人格层、技能层分开理解。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid cols-2" style="margin-top:16px">
+      <div class="card">
+        <h2>推荐阅读顺序</h2>
+        <ol>
+          <li>先看 <a href="config-map.html">配置地图</a>，建立整体文件层级感。</li>
+          <li>再看 <a href="openclaw-json.html">openclaw.json 详解</a>，理解总控台。</li>
+          <li>然后看 <a href="bots-routing.html">Bot / Agent / Binding</a>，搞懂路由。</li>
+          <li>接着看 <a href="bot-workspaces.html">Bot 工作区文件</a>，理解人格和工作规则。</li>
+          <li>最后看 <a href="discord-config.html">Discord 配置重点</a> 和 <a href="skills-customization.html">Skills 与个性化</a>。</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h2>看完之后你应该获得什么</h2>
+        <ul>
+          <li>知道哪些配置该去 <code>~/.openclaw</code> 改，哪些该去 Bot workspace 改。</li>
+          <li>知道 Bot 账号、agent、binding 不是一回事。</li>
+          <li>知道人格差异和能力差异分别由什么决定。</li>
+          <li>知道以后如果要把不同 Bot 真正做出分工，该从哪一层开始收紧。</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="grid cols-3">
+      <a class="card" href="config-map.html">
+        <h3>1. 配置地图</h3>
+        <p>先建立系统层、主工作区、Bot 工作区这三层的结构感。</p>
+      </a>
+      <a class="card" href="openclaw-json.html">
+        <h3>2. openclaw.json 详解</h3>
+        <p>拆开 top-level key，搞懂哪些属于总控、哪些属于路由、哪些属于工具层。</p>
+      </a>
+      <a class="card" href="bots-routing.html">
+        <h3>3. Bot / Agent / Binding</h3>
+        <p>解释账号、agent、binding 的关系，以及多 Bot 是如何接线的。</p>
+      </a>
+      <a class="card" href="bot-workspaces.html">
+        <h3>4. Bot 工作区文件</h3>
+        <p>说明 AGENTS、SOUL、USER、TOOLS、HEARTBEAT、memory 分别控制什么。</p>
+      </a>
+      <a class="card" href="discord-config.html">
+        <h3>5. Discord 配置重点</h3>
+        <p>聚焦多账号、多 Bot、默认账号、guild 和 DM 策略的常见配置点。</p>
+      </a>
+      <a class="card" href="skills-customization.html">
+        <h3>6. Skills 与个性化</h3>
+        <p>讲清多 Bot 共用技能池时会发生什么，以及以后怎么按 agent 收紧。</p>
+      </a>
+      <a class="card" href="openclaw-json-bots-deep-dive.html">
+        <h3>7. Bots 相关 key 深挖</h3>
+        <p>把跟 Bot 最相关的 key 单独拎出来，按排障思路来讲。</p>
+      </a>
+      <a class="card" href="openclaw-json-real-walkthrough.html">
+        <h3>8. 真实 openclaw.json 解读</h3>
+        <p>不是抽象语法说明，而是按你当前文件的实际结构逐段解释。</p>
+      </a>
+      <a class="card" href="config-recipes.html">
+        <h3>9. 配置修改实例</h3>
+        <p>新增 Bot、换 workspace、分 skills、控制群聊行为这些常见改法怎么下手。</p>
+      </a>
+      <a class="card" href="bot-role-handbook.html">
+        <h3>10. Bot 岗位说明书</h3>
+        <p>直接说明每个专用 Bot 最适合干什么，不适合干什么。</p>
+      </a>
+      <a class="card" href="bot-workspaces-real-interpretation.html">
+        <h3>11. 真实 Bot 文件解读</h3>
+        <p>结合实际 workspace 文件，解释各个 Bot 目前的风格和定位。</p>
+      </a>
+      <a class="card" href="maintenance-playbook.html">
+        <h3>12. 多 Bot 维护手册</h3>
+        <p>讲以后自己维护这套系统时，更稳的改动顺序和方法。</p>
+      </a>
+      <a class="card" href="risk-matrix.html">
+        <h3>13. 改动风险矩阵</h3>
+        <p>一眼看清哪些改动风险低，哪些改动风险高。</p>
+      </a>
+      <a class="card" href="change-checklist.html">
+        <h3>14. 改前改后检查清单</h3>
+        <p>正式动配置前后都可以照着过一遍，能显著减少误改。</p>
+      </a>
+      <a class="card" href="troubleshooting.html">
+        <h3>15. 常见故障排查</h3>
+        <p>Bot 不回、人格不对、能力没分开时，应该从哪里开始定位。</p>
+      </a>
+      <a class="card" href="quick-reference.html">
+        <h3>16. 快速参考</h3>
+        <p>保留最值得记住的几条，适合以后临时翻看。</p>
+      </a>
+    </div>
+
+    <div class="warn">这套站会尽量讲清结构与思路，但不会展示你机器里的真实 token、secret 或 gateway 认证信息。</div>
+
+    <div class="footer">内容主要基于你当前的 <code>~/.openclaw/openclaw.json</code>、Bot workspace 目录结构，以及 OpenClaw 配置、多 agent、Discord、Skills、agent workspace 等主题整理。</div>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

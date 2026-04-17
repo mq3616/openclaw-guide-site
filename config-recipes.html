@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>配置修改实例</title><link rel="stylesheet" href="styles.css" /></head><body><div class="layout"><aside class="sidebar"><div class="brand">🦊 OpenClaw 精讲</div><div class="subtitle">配置修改实例</div><div class="nav-group"><div class="nav-title">页面</div><a class="nav-link" href="index.html">🏠 首页</a><a class="nav-link" href="config-map.html">🗺️ 配置地图</a><a class="nav-link" href="openclaw-json.html">🧩 openclaw.json 详解</a><a class="nav-link" href="openclaw-json-bots-deep-dive.html">🧬 Bots 相关 key 深挖</a><a class="nav-link" href="bots-routing.html">🤖 Bot / Agent / Binding</a><a class="nav-link" href="bot-workspaces.html">🧠 Bot 工作区文件</a><a class="nav-link" href="discord-config.html">💬 Discord 配置重点</a><a class="nav-link" href="skills-customization.html">🛠️ Skills 与个性化</a><a class="nav-link" href="config-recipes.html">🧪 配置修改实例</a><a class="nav-link" href="bot-role-handbook.html">📒 Bot 岗位说明书</a></div></aside><main class="main"><section class="hero"><h1>常见配置修改实例 🧪</h1><p>这一页专门讲“如果你真要改”，通常该改哪几处。不是泛泛的概念页，而是操作思路页。</p></section><div class="card"><h2>场景 1，新增一个 Discord Bot</h2><ol><li>先在 <code>channels.discord.accounts</code> 增加一个新 accountId 和 token</li><li>在 <code>agents.list[]</code> 增加一个对应 agent，给它独立 workspace</li><li>在 <code>bindings[]</code> 增加一条，把这个 accountId 路由到该 agent</li><li>给新 workspace 准备 <code>AGENTS.md / SOUL.md / USER.md</code></li></ol><pre>{
+  agents: {
+    list: [
+      { id: "research_bot", workspace: ".../bot-workspaces/research_bot" }
+    ]
+  },
+  bindings: [
+    { agentId: "research_bot", match: { channel: "discord", accountId: "research_bot" } }
+  ],
+  channels: {
+    discord: {
+      accounts: {
+        research_bot: { token: "..." }
+      }
+    }
+  }
+}</pre></div><div class="card" style="margin-top:16px"><h2>场景 2，把某个 bot 换到新的 workspace</h2><p>如果你不满意某个 bot 当前人格，不一定要重建 bot 账号。很多时候只要改：</p><pre>agents.list[].workspace</pre><p>再把新 workspace 里的 AGENTS/SOUL/USER 配好就行。</p><div class="warn">⚠️ 这会明显改变 bot 的人格和记忆读取环境，所以改之前最好先备份原 workspace。</div></div><div class="card" style="margin-top:16px"><h2>场景 3，让两个 bot 真正技能不同</h2><p>不是只改 workspace，而是给 agent 配 skill allowlist：</p><pre>{
+  agents: {
+    defaults: { skills: ["weather", "tmux"] },
+    list: [
+      { id: "trading_report_bot", skills: ["weather"] },
+      { id: "skills_master_bot", skills: ["skill-creator", "clawhub", "tmux"] }
+    ]
+  }
+}</pre><p>这样才是能力层真正分流。</p></div><div class="card" style="margin-top:16px"><h2>场景 4，某个 bot 回答太啰嗦</h2><p>不要先改模型，也不要先改技能。更稳的顺序通常是：</p><ol><li>查 bot workspace 的 <code>USER.md</code></li><li>查 <code>SOUL.md</code></li><li>查 <code>AGENTS.md</code></li><li>最后才考虑 thinkingDefault 或模型</li></ol></div><div class="card" style="margin-top:16px"><h2>场景 5，某个 bot 在不该回的地方乱回</h2><ol><li>先查 <code>channels.discord.groupPolicy</code></li><li>再查 guild/channel allowlist</li><li>再查 bot workspace 的 AGENTS / HEARTBEAT 里有没有鼓励它乱插话</li></ol></div><div class="note">💡 很多配置修改问题，真正稳定的原则都是：<strong>先查路由，再查人格，再查技能，最后才查模型。</strong></div><div class="footer">建议下一页看 <a href="bot-role-handbook.html">Bot 岗位说明书</a>。</div></main></div><script src="app.js"></script></body></html>

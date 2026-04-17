@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>配置地图</title><link rel="stylesheet" href="styles.css" /></head><body><div class="layout"><aside class="sidebar"><div class="brand">OpenClaw 精讲</div><div class="subtitle">配置地图</div><div class="nav-group"><div class="nav-title">页面</div><a class="nav-link" href="index.html">首页</a><a class="nav-link" href="config-map.html">配置地图</a><a class="nav-link" href="openclaw-json.html">openclaw.json 详解</a><a class="nav-link" href="bots-routing.html">Bot / Agent / Binding</a><a class="nav-link" href="bot-workspaces.html">Bot 工作区文件</a><a class="nav-link" href="discord-config.html">Discord 配置重点</a><a class="nav-link" href="skills-customization.html">Skills 与个性化</a></div></aside><main class="main"><section class="hero"><h1>配置地图，先建立文件层级感</h1><p>理解 OpenClaw 最容易混乱的地方，就是把 <code>~/.openclaw</code>、主 workspace、bot workspace 这三层混在一起。你先把它们分开，后面很多事就顺了。</p></section><div class="grid cols-2"><div class="card"><h2>第一层，系统层</h2><pre>~/.openclaw/
+├─ openclaw.json
+├─ credentials/
+├─ memory/*.sqlite
+├─ cron/
+├─ agents/
+└─ ...</pre><p>这一层负责系统总控，包含总配置、凭据、会话、内部运行状态。最重要的是 <code>openclaw.json</code>。</p></div><div class="card"><h2>第二层，主工作区</h2><pre>~/.openclaw/workspace/
+├─ AGENTS.md
+├─ SOUL.md
+├─ USER.md
+├─ MEMORY.md
+├─ memory/
+└─ runtime-adapter/</pre><p>这一层是主 agent 的“家”。文件型记忆、主人格、主用户偏好都在这里。</p></div></div><div class="grid cols-2" style="margin-top:16px"><div class="card"><h2>第三层，bot 独立工作区</h2><pre>runtime-adapter/bot-workspaces/
+├─ trading_report_bot/
+├─ family_health_bot/
+├─ library_growth_bot/
+├─ info_collection_bot/
+└─ skills_master_bot/</pre><p>每个 bot 都像独立员工工位，有自己的 AGENTS/SOUL/USER/TOOLS/HEARTBEAT/memory。</p></div><div class="card"><h2>最实用的判断法</h2><table class="kv"><tr><th>想看什么</th><td>该去哪</td></tr><tr><th>机器人账号接到哪个脑子</th><td><code>~/.openclaw/openclaw.json</code></td></tr><tr><th>这个 bot 说话风格</th><td><code>bot-workspaces/&lt;bot&gt;/SOUL.md</code></td></tr><tr><th>这个 bot 的工作规则</th><td><code>bot-workspaces/&lt;bot&gt;/AGENTS.md</code></td></tr><tr><th>这个 bot 怎么服务你</th><td><code>bot-workspaces/&lt;bot&gt;/USER.md</code></td></tr><tr><th>定时醒来时做什么</th><td><code>bot-workspaces/&lt;bot&gt;/HEARTBEAT.md</code></td></tr><tr><th>技能允许范围</th><td>先看 <code>openclaw.json</code> 的 <code>agents.*.skills</code>，再看 skill 根目录</td></tr></table></div></div><div class="warn">不要把 <code>~/.openclaw</code> 和 workspace 混为一谈。前者更像系统后台，后者更像“给 agent 读的生活和工作资料”。</div><div class="footer">下一页建议看 <a href="openclaw-json.html">openclaw.json 详解</a>。</div></main></div><script src="app.js"></script></body></html>
