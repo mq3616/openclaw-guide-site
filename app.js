@@ -58,3 +58,22 @@ if (sidebar && main) {
     if (window.innerWidth > 980) setSidebarOpen(false);
   });
 }
+
+const backToTopButton = document.createElement('button');
+backToTopButton.className = 'back-to-top';
+backToTopButton.type = 'button';
+backToTopButton.setAttribute('aria-label', '回到顶部');
+backToTopButton.innerHTML = '<span aria-hidden="true">↑</span>';
+document.body.appendChild(backToTopButton);
+
+const syncBackToTopVisibility = () => {
+  const shouldShow = window.scrollY > 360;
+  backToTopButton.classList.toggle('visible', shouldShow);
+};
+
+backToTopButton.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+window.addEventListener('scroll', syncBackToTopVisibility, { passive: true });
+syncBackToTopVisibility();
